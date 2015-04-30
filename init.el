@@ -1,3 +1,22 @@
+;; Initial setup
+;;
+(setq user-full-name "Nikita B. Zuev")
+(setq user-mail-address "nikitazu@gmail.com")
+
+;; Highlight corresponding parentheses when cursor is on one
+(show-paren-mode t)
+;; Highlight tabulations
+(setq-default highlight-tabs t)
+;; Show trailing white spaces
+(setq-default show-trailing-whitespace t)
+
+;; Remove useless whitespace before saving a file
+(add-hook 'before-save-hook 'whitespace-cleanup)
+(add-hook 'before-save-hook (lambda() (delete-trailing-whitespace)))
+
+
+;; Package management
+;;
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
@@ -5,6 +24,8 @@
 (pallet-mode t)
 (add-to-list 'load-path "~/.emacs.d/custom")
 
+;; Packages
+;;
 (require 'ag)
 (setq ag-highlight-search t)
 
