@@ -36,9 +36,15 @@
 (require 'ag)
 (setq ag-highlight-search t)
 
-(require 'neotree-toggle)
+(require 'neotree)
 ;; Toggle directory tree
 (global-set-key (kbd "C-c d") 'neotree-toggle)
+(global-set-key (kbd "C-c g")
+		(lambda ()
+		  (interactive)
+		  (call-interactively 'neotree-find)
+		  (call-interactively 'other-window)))
+
 
 (require 'flx-ido)
 (ido-mode 1)
@@ -48,13 +54,14 @@
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil)
 
+(require 'projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 ;; Fuzzy find
 (global-set-key (kbd "C-c t") 'projectile-find-file)
 ;; Fuzzy switch buffer
 (global-set-key (kbd "C-c p") 'projectile-switch-to-buffer)
-
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
 ;; Other bindings
 (global-set-key (kbd "C-c s") 'shell)
