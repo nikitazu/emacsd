@@ -63,8 +63,10 @@
 (global-set-key (kbd "C-c p") 'projectile-switch-to-buffer)
 (setq projectile-switch-project-action 'neotree-projectile-action)
 
-;; Other bindings
-(global-set-key (kbd "C-c s") 'shell)
+(require 'magit)
+(setq magit-last-seen-setup-instructions "1.4.0")
+(global-set-key (kbd "C-c s") 'magit-status)
+
 
 ;; At the end
 (neotree-show)
