@@ -1,6 +1,7 @@
 (source melpa)
 
 (depends-on "ag")
+(depends-on "auto-complete")
 (depends-on "flx-ido")
 (depends-on "ido")
 (depends-on "magit")
