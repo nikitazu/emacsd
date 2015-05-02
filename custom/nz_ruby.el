@@ -4,6 +4,12 @@
 ;; Path to ruby interpreter
 (setq enh-ruby-program "~/.rbenv/versions/2.2.2/bin/ruby")
 
+;; Assert path to ruby interpreter exists
+(when (and (not (file-exists-p enh-ruby-program))
+	   (not (file-exists-p (concat enh-ruby-program ".exe"))))
+  (error "Ruby interpreter not found at path [%s], Enhanced Ruby Mode will not work"
+	 enh-ruby-program))
+
 ;; Mode title
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
