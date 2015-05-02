@@ -20,5 +20,8 @@ ido.last
 projectile-bookmarks.eld
 projectile.cache
 
+# auto-complete
+ac-comphist.dat
+
 # wtf?
 server/
