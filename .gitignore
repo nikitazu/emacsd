@@ -12,3 +12,13 @@ auto-save-list/
 
 # Temp files
 *~
+
+# ido
+ido.last
+
+# projectile
+projectile-bookmarks.eld
+projectile.cache
+
+# wtf?
+server/

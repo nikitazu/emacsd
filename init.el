@@ -1,5 +1,8 @@
 ;; Initial setup
 ;;
+
+(package-initialize)
+
 (setq user-full-name "Nikita B. Zuev")
 (setq user-mail-address "nikitazu@gmail.com")
 

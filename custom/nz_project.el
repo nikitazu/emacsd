@@ -31,3 +31,10 @@
 (global-set-key (kbd "C-c p") 'projectile-switch-to-buffer)
 ;; refresh tree when swithing a project
 (setq projectile-switch-project-action 'neotree-projectile-action)
+
+
+;; ignore some folders
+(add-to-list 'projectile-globally-ignored-directories ".git")
+(add-to-list 'ido-ignore-directories ".git")
+(setq projectile-enable-caching t)
+(setq projectile-indexing-method 'alien)
