@@ -9,4 +9,5 @@
 (depends-on "neotree")
 (depends-on "pallet")
 (depends-on "projectile")
+(depends-on "smartparens")
 (depends-on "web-mode")
