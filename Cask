@@ -2,6 +2,7 @@
 
 (depends-on "ag")
 (depends-on "auto-complete")
+(depends-on "coffee-mode")
 (depends-on "enh-ruby-mode")
 (depends-on "flx-ido")
 (depends-on "highlight-indentation")
