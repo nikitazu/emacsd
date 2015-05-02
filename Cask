@@ -7,3 +7,4 @@
 (depends-on "neotree")
 (depends-on "pallet")
 (depends-on "projectile")
+(depends-on "web-mode")

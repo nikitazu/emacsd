@@ -36,4 +36,26 @@
 (load-custom "nz_git.el")
 (load-custom "nz_project.el")
 (load-custom "nz_search.el")
+(load-custom "nz_web.el")
 (load-custom "zzz_last.el")
+
+
+
+;; *******************
+;; Auto-generated code
+;; *******************
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (web-mode projectile pallet neotree magit flx-ido ag))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
