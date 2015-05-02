@@ -23,6 +23,17 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; Text edit helpers
+;;
+(defun nz-eol-newline-and-indent ()
+  "Go to end of line, insert newline and indent."
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+(global-set-key (kbd "C-<return>") 'nz-eol-newline-and-indent)
+
+
 ;; Package management
 ;;
 (require 'cask "~/.cask/cask.el")
