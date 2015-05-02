@@ -27,8 +27,10 @@
 (require 'pallet)
 (pallet-mode t)
 
-(add-to-list 'load-path "~/.emacs.d/custom/")
-(load "nz_git.el")
-(load "nz_project.el")
-(load "nz_search.el")
-(load "zzz_last.el")
+(defun load-custom (name)
+  (load (concat "~/.emacs.d/custom/" name)))
+
+(load-custom "nz_git.el")
+(load-custom "nz_project.el")
+(load-custom "nz_search.el")
+(load-custom "zzz_last.el")
