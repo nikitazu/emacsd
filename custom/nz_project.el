@@ -30,7 +30,7 @@
 ;; Fuzzy switch buffer
 (global-set-key (kbd "C-c p") 'projectile-switch-to-buffer)
 ;; refresh tree when swithing a project
-(setq projectile-switch-project-action 'neotree-projectile-action)
+;(setq projectile-switch-project-action 'neotree-projectile-action)
 
 
 ;; ignore some folders
