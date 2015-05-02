@@ -1,2 +1,14 @@
+# Windows
 *.dll
+
+# Autosaves
 auto-save-list/
+
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Temp files
+*~
