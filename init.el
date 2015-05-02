@@ -51,6 +51,7 @@
 (load-custom "nz_ruby.el")
 (load-custom "nz_web.el")
 (load-custom "nz_smartparens.el")
+(load-custom "nz_highlight.el")
 (load-custom "zzz_last.el")
 
 
@@ -66,7 +67,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (smartparens auto-complete enh-ruby-mode web-mode projectile pallet neotree magit flx-ido ag))))
+    (highlight-indentation smartparens auto-complete enh-ruby-mode web-mode projectile pallet neotree magit flx-ido ag))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

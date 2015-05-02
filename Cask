@@ -4,6 +4,7 @@
 (depends-on "auto-complete")
 (depends-on "enh-ruby-mode")
 (depends-on "flx-ido")
+(depends-on "highlight-indentation")
 (depends-on "ido")
 (depends-on "magit")
 (depends-on "neotree")
