@@ -1,6 +1,8 @@
 ;; Enhanced Ruby Mode
 ;;
 
+(require 'enh-ruby-mode)
+
 ;; Path to ruby interpreter
 (setq enh-ruby-program nz-emacs-ruby)
 
@@ -26,3 +28,12 @@
 ;; Indentation
 (setq enh-ruby-bounce-deep-indent t)
 (setq enh-ruby-hanging-brace-indent-level 2)
+
+
+;; Robe
+;;
+
+(require 'robe)
+
+(add-hook 'enh-ruby-mode-hook 'robe-mode)
+(add-hook 'robe-mode-hook 'ac-robe-setup)
