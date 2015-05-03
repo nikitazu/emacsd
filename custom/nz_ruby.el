@@ -2,7 +2,7 @@
 ;;
 
 ;; Path to ruby interpreter
-(setq enh-ruby-program "~/.rbenv/versions/2.2.2/bin/ruby")
+(setq enh-ruby-program nz-emacs-ruby)
 
 ;; Assert path to ruby interpreter exists
 (when (and (not (file-exists-p enh-ruby-program))

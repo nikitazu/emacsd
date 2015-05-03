@@ -13,6 +13,9 @@ auto-save-list/
 # Temp files
 *~
 
+# Custom environmet
+custom/nz_environment_init.el
+
 # ido
 ido.last
 

@@ -44,6 +44,7 @@
 (defun load-custom (name)
   (load (concat "~/.emacs.d/custom/" name)))
 
+(load-custom "nz_environment.el")
 (load-custom "nz_autocomplete.el")
 (load-custom "nz_git.el")
 (load-custom "nz_project.el")
