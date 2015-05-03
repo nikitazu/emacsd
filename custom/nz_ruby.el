@@ -5,8 +5,7 @@
 (setq enh-ruby-program nz-emacs-ruby)
 
 ;; Assert path to ruby interpreter exists
-(when (and (not (file-exists-p enh-ruby-program))
-	   (not (file-exists-p (concat enh-ruby-program ".exe"))))
+(when (not (file-exists-p enh-ruby-program))
   (error "Ruby interpreter not found at path [%s], Enhanced Ruby Mode will not work"
 	 enh-ruby-program))
 
