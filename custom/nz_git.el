@@ -2,7 +2,8 @@
 ;;
 (require 'magit)
 (setq magit-last-seen-setup-instructions "1.4.0")
-(global-set-key (kbd "C-c s") 'magit-status)
+
+(setenv "GIT_SSH" nz-emacs-git-plink-path)
 
 (defun nz-git-launch-pageant ()
   (interactive)
@@ -10,3 +11,4 @@
     (set-process-query-on-exit-flag proc nil)))
 
 (global-set-key (kbd "C-c C-s") 'nz-git-launch-pageant)
+(global-set-key (kbd "C-c s") 'magit-status)

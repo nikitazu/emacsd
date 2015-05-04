@@ -49,7 +49,8 @@
 (load-custom "nz_git.el")
 (load-custom "nz_project.el")
 (load-custom "nz_search.el")
-(load-custom "nz_racket.el")
+(when nz-emacs-racket-enabled-p
+  (load-custom "nz_racket.el"))
 (when nz-emacs-ruby-enabled-p
   (load-custom "nz_ruby.el"))
 (load-custom "nz_coffee.el")
