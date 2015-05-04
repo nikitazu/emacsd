@@ -49,7 +49,8 @@
 (load-custom "nz_git.el")
 (load-custom "nz_project.el")
 (load-custom "nz_search.el")
-(load-custom "nz_ruby.el")
+(when nz-emacs-ruby-enabled-p
+  (load-custom "nz_ruby.el"))
 (load-custom "nz_coffee.el")
 (load-custom "nz_web.el")
 (load-custom "nz_smartparens.el")
