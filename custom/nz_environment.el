@@ -12,6 +12,8 @@
 (defvar nz-emacs-git-ppk-path nil "Path to putty compatible private key")
 (defvar nz-emacs-git-plink-path nil "Path to putty ssh link")
 
+(defvar nz-emacs-sql-mysql-client-path nil "Path to mysql client")
+
 (load-custom "nz_environment_init.el")
 
 (when (and nz-emacs-ruby-enabled-p (not (stringp nz-emacs-ruby)))
