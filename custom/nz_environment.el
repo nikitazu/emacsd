@@ -8,6 +8,9 @@
 (defvar nz-emacs-ruby-enabled-p nil "Ruby mode enabled")
 (defvar nz-emacs-ruby nil "Path to a ruby interpreter")
 
+(defvar nz-emacs-git-pageant-path nil "Path to putty session agent")
+(defvar nz-emacs-git-ppk-path nil "Path to putty compatible private key")
+
 (load-custom "nz_environment_init.el")
 
 (when (not (stringp nz-emacs-ruby))
