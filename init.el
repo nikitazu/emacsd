@@ -10,6 +10,7 @@
 (show-paren-mode t)
 (setq-default highlight-tabs t)
 (setq-default show-trailing-whitespace t)
+(setq inhibit-startup-message t)
 
 ;; Remove useless whitespace before saving a file
 (add-hook 'before-save-hook 'whitespace-cleanup)
