@@ -34,7 +34,13 @@
 
 
 ;; ignore some folders
-(add-to-list 'projectile-globally-ignored-directories ".git")
-(add-to-list 'ido-ignore-directories ".git")
+(defun nz-projectile-add-to-ignore-directories (ignore-list)
+  (dolist (item ignore-list)
+    (add-to-list 'projectile-globally-ignored-files item)
+    (add-to-list 'ido-ignore-directories item)))
+
+(nz-projectile-add-to-ignore-directories '(".hg" ".git" ".sync"))
+
 (setq projectile-enable-caching t)
 (setq projectile-indexing-method 'alien)
+(setq ido-ignore-extensions t)
