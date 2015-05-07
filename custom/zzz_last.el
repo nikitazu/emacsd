@@ -2,3 +2,4 @@
 ;; Perform final initialization
 ;;
 ;(neotree-show)
+(find-file "~/.emacs.d/Cask")

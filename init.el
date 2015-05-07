@@ -21,6 +21,7 @@
 (set-keyboard-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
+(setq-default buffer-file-coding-system 'utf-8)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 (set-default-coding-systems 'utf-8)
 (unless (eq system-type 'windows-nt)
