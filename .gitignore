@@ -19,6 +19,9 @@ custom/nz_environment_init.el
 # ido
 ido.last
 
+# emacs portable shell emulator
+eshell/
+
 # projectile
 projectile-bookmarks.eld
 projectile.cache

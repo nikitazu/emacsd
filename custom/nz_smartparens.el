@@ -10,3 +10,7 @@
 (sp-with-modes '(rhtml-mode)
   (sp-local-pair "<" ">")
   (sp-local-pair "<%" "%>"))
+
+(sp-with-modes '(racket-mode)
+  ;; disable ', it's the quote character!
+  (sp-local-pair "'" nil :actions nil))
