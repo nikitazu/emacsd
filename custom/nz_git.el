@@ -6,8 +6,14 @@
 (setenv "GIT_SSH" nz-emacs-git-plink-path)
 
 (defun nz-git-launch-pageant ()
+  "Runs putty agent to manage ssh session (Win32)."
   (interactive)
-  (let ((proc (start-process "pageant" nil nz-emacs-git-pageant-path nz-emacs-git-ppk-path)))
+  (let ((proc (start-process "pageant"
+			     nil
+			     "cmd.exe"
+			     "/C"
+			     nz-emacs-git-pageant-win32-style-path
+			     nz-emacs-git-ppk-win32-style-path)))
     (set-process-query-on-exit-flag proc nil)))
 
 (global-set-key (kbd "C-c C-s") 'nz-git-launch-pageant)
