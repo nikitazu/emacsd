@@ -51,11 +51,13 @@
 (require 'pallet)
 (pallet-mode t)
 
+
 (defun load-custom (name)
   (load (concat "~/.emacs.d/custom/" name)))
 
 (load-custom "nz_environment.el")
 (load-custom "nz_autocomplete.el")
+(load-custom "nz_elisp.el")
 (load-custom "nz_git.el")
 (load-custom "nz_project.el")
 (load-custom "nz_search.el")
@@ -68,6 +70,7 @@
 (load-custom "nz_web.el")
 (load-custom "nz_smartparens.el")
 (load-custom "nz_highlight.el")
+(load-custom "nz_golang.el")
 (load-custom "zzz_last.el")
 
 
@@ -82,7 +85,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (package-build shut-up epl git commander f dash s))))
+ '(coffee-tab-width 2)
+ '(package-selected-packages
+   (quote
+    (go-mode ert-runner undercover package-build shut-up epl git commander f dash s))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
