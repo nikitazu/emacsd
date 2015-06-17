@@ -13,6 +13,7 @@
 (depends-on "ido")
 (depends-on "magit")
 (depends-on "neotree")
+(depends-on "omnisharp")
 (depends-on "pallet")
 (depends-on "projectile")
 (depends-on "racket-mode")

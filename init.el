@@ -71,6 +71,7 @@
 (load-custom "nz_smartparens.el")
 (load-custom "nz_highlight.el")
 (load-custom "nz_golang.el")
+(load-custom "nz_sharp.el")
 (load-custom "zzz_last.el")
 
 
@@ -88,7 +89,7 @@
  '(coffee-tab-width 2)
  '(package-selected-packages
    (quote
-    (go-mode ert-runner undercover package-build shut-up epl git commander f dash s))))
+    (omnisharp go-mode ert-runner undercover package-build shut-up epl git commander f dash s))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
