@@ -199,9 +199,9 @@
 ;; Дока: https://docs.projectile.mx/projectile/index.html
 ;;
 (projectile-mode +1)
-;; Recommended keymap prefix on Windows/Linux
+;; Комбинация, начинающаяя команды projectile
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(setq projectile-project-search-path '("c:/prj/c" "c:/prj/go"))
+(setq projectile-project-search-path nz/projects-directories)
 
 
 ;; Подсветка цветовых литералов в текущем буфере
