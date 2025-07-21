@@ -63,18 +63,6 @@
       ("\\<\\(and\\|or\\|not\\)\\>" . font-lock-keyword-face)))))
 
 
-;; Фуззи-автокомплит
-;; IVY (из пакета counsel)
-;; Документация: https://elpa.gnu.org/packages/doc/ivy.html#Key-bindings
-;;
-(ivy-mode 1)
-(setopt ivy-use-virtual-buffers t)
-(setopt enable-recursive-minibuffers t)
-(setopt ivy-count-format "(%d/%d) ")
-(keymap-global-set "C-s" 'swiper-isearch)
-(counsel-mode)
-
-
 ;; Навигация по буферам
 ;;
 
@@ -157,6 +145,24 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
+
+
+;; Фуззи-автокомплит
+;; IVY (из пакета counsel)
+;; Документация: https://elpa.gnu.org/packages/doc/ivy.html#Key-bindings
+;;
+(ivy-mode 1)
+(setopt ivy-use-virtual-buffers t)
+(setopt enable-recursive-minibuffers t)
+(setopt ivy-count-format "(%d/%d) ")
+(keymap-global-set "C-s" 'swiper-isearch)
+(counsel-mode)
+
+
+;; Подсветка цветовых литералов в текущем буфере
+;;
+;; Вызвать M-x rainbow-mode
+;;
 
 
 ;; Редактирование кода C
