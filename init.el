@@ -92,6 +92,10 @@
 ;; Разделлить окно вертикально
 (keymap-global-set "M-3" 'split-window-right)
 
+(keymap-global-set "C-=" 'text-scale-increase)
+(keymap-global-set "C--" 'text-scale-decrease)
+(keymap-global-set "C-0" 'text-scale-set)
+
 ;; Редактирование текста
 ;;
 
