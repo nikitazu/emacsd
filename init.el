@@ -64,10 +64,15 @@
 
 
 ;; Фуззи-автокомплит
+;; IVY (из пакета counsel)
+;; Документация: https://elpa.gnu.org/packages/doc/ivy.html#Key-bindings
 ;;
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
+(ivy-mode 1)
+(setopt ivy-use-virtual-buffers t)
+(setopt enable-recursive-minibuffers t)
+(setopt ivy-count-format "(%d/%d) ")
+(keymap-global-set "C-s" 'swiper-isearch)
+(counsel-mode)
 
 
 ;; Навигация по буферам
