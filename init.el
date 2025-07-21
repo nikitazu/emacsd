@@ -251,7 +251,7 @@
     (find-file "~/prj")))
 
 (defun ag (term)
-  "fucks it"
+  "Поиск с помошью ag"
   (interactive "MTerm: ")
   (compile
    (format "ag --ignore-case --vimgrep %s %s" term default-directory)))
