@@ -1,3 +1,39 @@
+;; Файл настройки EMACS
+;;
+;; нашкодил Никита Б. Зуев <nikitazu@gmail.com>
+;; вместо отпуска, т.к. очень захотелось
+;;
+
+;; Вспомогательные функции
+;;
+
+(defun nz/directory-get-subdirs (path)
+  (if (file-directory-p path)
+      (let* ((names (directory-files path))
+             (names (seq-remove (lambda (x) (equal (string-match "^\\..*" x) 0)) names))
+             (paths (mapcar (lambda (x) (file-name-concat path x)) names))
+             (projects (seq-remove (lambda (x) (not (file-directory-p x))) paths)))
+        projects)
+    nil))
+
+(defun nz/list-concat (lst items)
+  (seq-each (lambda (x) (add-to-list 'lst x))
+            items))
+
+;; Мои глобальные штучки
+;;
+
+(defvar nz/projects-directory "c:/prj")
+(defvar nz/projects-directories '())
+
+(when (not (file-directory-p nz/projects-directory))
+  (setq nz/projects-directory "~/prj"))
+
+(setq nz/projects-directories
+      (nz/list-concat nz/projects-directories
+                      (nz/directory-get-subdirs nz/projects-directory)))
+
+
 ;; Пакет Custom
 ;;
 
@@ -149,7 +185,7 @@
 
 ;; Фуззи-автокомплит
 ;; IVY (из пакета counsel)
-;; Документация: https://elpa.gnu.org/packages/doc/ivy.html#Key-bindings
+;; Дока: https://elpa.gnu.org/packages/doc/ivy.html#Key-bindings
 ;;
 (ivy-mode 1)
 (setopt ivy-use-virtual-buffers t)
@@ -157,6 +193,15 @@
 (setopt ivy-count-format "(%d/%d) ")
 (keymap-global-set "C-s" 'swiper-isearch)
 (counsel-mode)
+
+
+;; Работа с проектами
+;; Дока: https://docs.projectile.mx/projectile/index.html
+;;
+(projectile-mode +1)
+;; Recommended keymap prefix on Windows/Linux
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(setq projectile-project-search-path '("c:/prj/c" "c:/prj/go"))
 
 
 ;; Подсветка цветовых литералов в текущем буфере
