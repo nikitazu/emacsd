@@ -92,6 +92,16 @@
 ;; Разделлить окно вертикально
 (keymap-global-set "M-3" 'split-window-right)
 
+;; Зум
+;;
+;; По умолчанию уже есть
+;; <C-wheel-up>
+;; <C-wheel-down>
+;; <C-x C-=>
+;; <C-x C-->
+;;
+;; Для удобства добавляем
+;;
 (keymap-global-set "C-=" 'text-scale-increase)
 (keymap-global-set "C--" 'text-scale-decrease)
 (keymap-global-set "C-0" 'text-scale-set)
