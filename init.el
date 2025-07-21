@@ -221,7 +221,9 @@
 (defun prj ()
   "Перейти к директории проектов"
   (interactive)
-  (find-file "C:/prj/"))
+  (if (file-directory-p "C:/prj")
+      (find-file "C:/prj/")
+    (find-file "~/prj")))
 
 (defun ag (term)
   "fucks it"
