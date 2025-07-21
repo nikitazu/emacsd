@@ -168,7 +168,7 @@ read it before opening a new issue about your will.")
 (let ((colors '(;; Upstream theme color
                 (dracula-bg      "#282a36" "unspecified-bg" "unspecified-bg") ; official background
                 (dracula-fg      "#c2c8c8" "#dfdfdf" "brightwhite") ; official foreground
-                (dracula-current "#44475a" "#303030" "brightblack") ; official current-line/selection
+                (dracula-current "#1a1b21" "#303030" "darkblack")   ; official current-line/selection
                 (dracula-comment "#6272b4" "#5f5faf" "blue")        ; official comment
                 (dracula-whspace "#484a56" "#484a56" "fadeblue")    ; nikitazu whitespace
                 (dracula-cyan    "#9dc2e8" "#87d7ff" "brightcyan")  ; official cyan
