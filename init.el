@@ -253,8 +253,8 @@
 (defun ag (term)
   "fucks it"
   (interactive "MTerm: ")
-  (shell-command
-   (format "ag --cc %s" term)))
+  (compile
+   (format "ag --ignore-case --vimgrep %s %s" term default-directory)))
 
 (defun git-grep (term)
   "Поиск с помошью гита"
