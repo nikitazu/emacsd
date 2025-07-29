@@ -990,7 +990,7 @@ read it before opening a new issue about your will.")
                (whitespace-space :background ,dracula-bg :foreground ,dracula-whspace)
                (whitespace-space-after-tab :background ,dracula-orange :foreground ,dracula-red)
                (whitespace-space-before-tab :background ,dracula-orange :foreground ,dracula-red)
-               (whitespace-tab :background ,bg2 :foreground ,dracula-comment)
+               (whitespace-tab :background ,dracula-bg :foreground ,dracula-whspace)
                (whitespace-trailing :inherit trailing-whitespace)
                ;; yard-mode
                (yard-tag-face :inherit font-lock-builtin-face)
