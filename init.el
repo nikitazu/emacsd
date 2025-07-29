@@ -57,8 +57,11 @@
                     :font "Consolas"
                     :height 180)
 
+(add-to-list 'default-frame-alist '(font . "Consolas-16"))
+
 ;; Запускать развёрнутым на весь экран
-(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+;(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Отключить панель с кнопками сверху
 (tool-bar-mode -1)
@@ -288,6 +291,7 @@
              nz/dashboard-banner-ascii-5)))
 
 (keymap-global-set "C-c d" 'dashboard-open)
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
 
 ;; Подсветка цветовых литералов в текущем буфере
