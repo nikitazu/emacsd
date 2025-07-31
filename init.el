@@ -37,6 +37,10 @@
       (nz/list-concat nz/projects-directories
                       (nz/directory-get-subdirs nz/projects-directory)))
 
+;; Путь к моим локальным пакетам
+;;
+
+(add-to-list 'load-path "~/.emacs.d/my-packages")
 
 ;; Пакет Custom
 ;;
@@ -471,6 +475,9 @@
 
 (keymap-global-set "C-c n" 'nz/note-new)
 (keymap-global-set "C-c C-n" 'nz/note-list)
+
+;; Режим языка программирования `sukabla'
+(require 'sukabla-mode)
 
 ;; ДЕЛА хук на открытие файла - если он в заметках - добавлять в файл истории с датой открытия
 ;;      если он там уже есть то двигать наверх и обновлять дату
