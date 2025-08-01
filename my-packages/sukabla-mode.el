@@ -53,7 +53,7 @@ so I used DeepSeek to generate and then explain
 it to me line by line.")
 
 (defconst sukabla-keyword-list
-  '("сука" "бля" "типа" "если" "иначе" "вот" "пока" "всем" "бч" "мч")
+  '("сука" "бля" "типа" "если" "иначе" "вот" "пока" "всем" "бч" "мч" "числа")
   "List of sukabla language keywords.")
 
 (defconst sukabla-constant-list
