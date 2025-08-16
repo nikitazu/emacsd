@@ -479,6 +479,14 @@
 ;; Режим языка программирования `sukabla'
 (require 'sukabla-mode)
 
+;; Настройки для работы с ЯП `scheme'
+;;
+
+(autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
+(autoload 'run-scheme "cmuscheme" "Switch to interactive Scheme buffer." t)
+(setq auto-mode-alist (cons '("\\.ss" . scheme-mode) auto-mode-alist))
+
+
 ;; ДЕЛА хук на открытие файла - если он в заметках - добавлять в файл истории с датой открытия
 ;;      если он там уже есть то двигать наверх и обновлять дату
 ;; ДЕЛА просмотр истории
