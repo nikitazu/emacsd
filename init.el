@@ -132,6 +132,14 @@
 ;; Разделлить окно вертикально
 (keymap-global-set "M-3" 'split-window-right)
 
+(defun nz/kill-emacs ()
+  (interactive)
+  (let ((exit-code 1)
+        (restart-flag nil))
+    (kill-emacs exit-code restart-flag)))
+
+(keymap-global-set "C-q" 'nz/kill-emacs)
+
 ;; Зум
 ;;
 ;; По умолчанию уже есть
