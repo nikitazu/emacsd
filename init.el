@@ -1,3 +1,5 @@
+;; -*- mode: elisp -*-
+
 ;; Файл настройки EMACS
 ;;
 ;; нашкодил Никита Б. Зуев <nikitazu@gmail.com>
