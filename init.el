@@ -192,6 +192,13 @@
 (keymap-global-set "M-<down>" 'nz/shift-line-down)
 
 
+;; ОРГ-Режим
+;;
+(require 'org)
+(setq org-todo-keywords
+      '((sequence "ДЕЛА" "ВРАБ" "ГОТВ")))
+
+
 ;; Пакетный менеджер
 ;;
 ;; Гайд https://stable.melpa.org/#/getting-started
