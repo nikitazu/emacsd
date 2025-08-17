@@ -232,12 +232,13 @@
 
 (keymap-global-set "C-c a" 'nz/org-agenda)
 
-(defun nz/org-define-keys ()
-  "Настройка комбинаций клавиш для ОРГ режима."
+(defun nz/org-mode-hook ()
+  "Настройка всякого для ОРГ режима."
+  (setq-local whitespace-line-column 500) ; для длинных ссылок
   (define-key org-mode-map (kbd "C-c x") 'org-toggle-checkbox)
   (define-key org-mode-map (kbd "C-c i") 'org-info))
 
-(add-hook 'org-mode-hook 'nz/org-define-keys)
+(add-hook 'org-mode-hook 'nz/org-mode-hook)
 
 ;; Пакетный менеджер
 ;;
