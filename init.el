@@ -14,8 +14,22 @@
       (let* ((names (directory-files path))
              (names (seq-remove (lambda (x) (equal (string-match "^\\..*" x) 0)) names))
              (paths (mapcar (lambda (x) (file-name-concat path x)) names))
-             (projects (seq-remove (lambda (x) (not (file-directory-p x))) paths)))
-        projects)
+             (subdirs (seq-remove (lambda (x) (not (file-directory-p x))) paths)))
+        subdirs)
+    nil))
+
+(defun nz/directory-get-files (path &optional mask-re)
+  (if (file-directory-p path)
+      (let* ((names (directory-files path))
+             (names (seq-remove (lambda (x) (equal (string-match "^\\..*" x) 0)) names))
+             (paths (mapcar (lambda (x) (file-name-concat path x)) names))
+             (files (seq-remove (lambda (x) (file-directory-p x)) paths))
+             (final-files (if (null mask-re)
+                              files
+                            (seq-remove (lambda (x) (null (string-match mask-re x)))
+                                        files)))
+             )
+        final-files)
     nil))
 
 (defun nz/list-concat (lst items)
@@ -39,6 +53,17 @@
       (nz/list-concat nz/projects-directories
                       (nz/directory-get-subdirs nz/projects-directory)))
 
+(defvar nz/org-directory "c:/nz/notes/org")
+(defvar nz/org-files '())
+
+(when (not (file-directory-p nz/org-directory))
+  (setq nz/org-directory "~/notes/org"))
+
+(setq nz/org-files
+      (nz/list-concat nz/org-files
+                      (nz/directory-get-files nz/org-directory "\\.org$")))
+
+
 ;; Путь к моим локальным пакетам
 ;;
 
@@ -50,7 +75,6 @@
 (setq custom-file "~/.emacs.d/my-custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
-
 
 ;; Внешний вид
 ;;
@@ -200,6 +224,18 @@
 (setq org-todo-keywords
       '((sequence "ДЕЛА" "ВРАБ" "ГОТВ")))
 
+(defun nz/org-agenda ()
+  "Запуск повестки дня с явно указанными файлами из переменной `nz/org-files'."
+  (interactive)
+  (let ((org-agenda-files nz/org-files))
+    (org-agenda)))
+
+(keymap-global-set "C-c a" 'nz/org-agenda)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (define-key org-mode-map (kbd "C-c x") 'org-toggle-checkbox)))
+
 
 ;; Пакетный менеджер
 ;;
@@ -314,6 +350,9 @@
              nz/dashboard-banner-ascii-4
              nz/dashboard-banner-ascii-5)))
 
+;(setq dashboard-week-agenda t)
+;(setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+
 (keymap-global-set "C-c d" 'dashboard-open)
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
@@ -401,6 +440,12 @@
   "Перейти к файлу конфигурации"
   (interactive)
   (find-file "~/.emacs.d/init.el"))
+
+(defun org ()
+  "Перейти к ОРГ файлу заметок"
+  (interactive)
+  (when (not (null nz/org-files))
+    (find-file (car nz/org-files))))
 
 (defun prj ()
   "Перейти к директории проектов"
