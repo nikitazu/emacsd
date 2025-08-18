@@ -121,6 +121,12 @@
 (global-whitespace-mode)
 (setq whitespace-line-column 100)
 
+;; UTF-8
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+(set-keyboard-coding-system 'utf-8-unix)
+(set-terminal-coding-system 'utf-8-unix)
+
 
 ;; Подсветка специальных слов
 ;;
@@ -239,6 +245,7 @@
   (define-key org-mode-map (kbd "C-c i") 'org-info))
 
 (add-hook 'org-mode-hook 'nz/org-mode-hook)
+
 
 ;; Пакетный менеджер
 ;;
