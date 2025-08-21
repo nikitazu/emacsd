@@ -63,6 +63,9 @@
 (when (not (file-directory-p nz/org-publish-directory))
   (setq nz/org-publish-directory "~/notes/publish"))
 
+(defvar nz/org-capture-file
+  (file-name-concat nz/org-directory "10-inbox.org"))
+
 (setq nz/org-files
       (nz/list-concat nz/org-files
                       (nz/directory-get-files nz/org-directory "\\.org$")))
@@ -234,6 +237,36 @@
 (setq org-todo-keywords
       '((sequence "ДЕЛА" "ВРАБ" "ГОТВ")))
 
+(setq org-capture-templates
+      '(("t" "Task (Задача)" entry
+         (file+headline nz/org-capture-file "Задачи")
+         "* ДЕЛА %?\n  %i\n  %a"
+         :empty-lines-before 1)
+
+        ("n" "Note (Заметка)" entry
+         (file+headline nz/org-capture-file "Заметки")
+         "\
+* %?\n\n\
+%i\n\
+Записано: %T\n\
+Контекст: %a\n"
+         :empty-lines-before 1)
+
+        ("e" "Experimental (Экспериментальная запись)" entry
+         (file+headline nz/org-capture-file "Заметки")
+         "\
+* %?\n\n\
+%i\n\
+:PROPERTIES:\n\
+:CreatedAt: %T\n\
+:END:\n\n\
+Записано: %T\n\
+Контекст: %a\n\
+Файл: %f\n\
+ФАЙЛ: %F\n"
+         :empty-lines-before 1)
+        ))
+
 (defun nz/org-agenda ()
   "Запуск повестки дня с явно указанными файлами из переменной `nz/org-files'."
   (interactive)
@@ -241,6 +274,7 @@
     (org-agenda)))
 
 (keymap-global-set "C-c a" 'nz/org-agenda)
+(keymap-global-set "C-c n n" 'org-capture)
 
 (defun nz/org-mode-hook ()
   "Настройка всякого для ОРГ режима."
