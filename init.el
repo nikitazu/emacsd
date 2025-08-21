@@ -54,10 +54,14 @@
                       (nz/directory-get-subdirs nz/projects-directory)))
 
 (defvar nz/org-directory "c:/nz/notes/org")
+(defvar nz/org-publish-directory "c:/nz/notes/publish")
 (defvar nz/org-files '())
 
 (when (not (file-directory-p nz/org-directory))
   (setq nz/org-directory "~/notes/org"))
+
+(when (not (file-directory-p nz/org-publish-directory))
+  (setq nz/org-publish-directory "~/notes/publish"))
 
 (setq nz/org-files
       (nz/list-concat nz/org-files
@@ -246,6 +250,12 @@
 
 (add-hook 'org-mode-hook 'nz/org-mode-hook)
 
+(setq org-publish-project-alist
+      `(("notes"
+         :base-directory ,nz/org-directory
+         :publishing-directory ,nz/org-publish-directory
+         :recursive t
+         :publishing-function org-html-publish-to-html)))
 
 ;; Пакетный менеджер
 ;;
@@ -523,30 +533,30 @@
 (keymap-global-set "<f7>" 'nz/test)
 
 
-;; Заметки
+;; Заметки - ЗАМОРОЖЕНО (будем юзать орг-режим)
 ;;
 
-(defvar nz/note-root-dir "~/.emacs.d/my-notes"
-  "Путь к папке с заметками")
-
-(setq nz/note-root-dir "c:/nz/notes")
-
-(defun nz/note-new ()
-  "Создать заметку"
-  (interactive)
-  (when (not (file-directory-p nz/note-root-dir))
-    (make-directory nz/note-root-dir))
-  (let ((note-name (format-time-string "%Y-%m-%d_%H%M%S.temp")))
-    (let ((note-path (format "%s/%s" nz/note-root-dir note-name)))
-      (find-file note-path))))
-
-(defun nz/note-list ()
-  "Показать заметки"
-  (interactive)
-  (dired nz/note-root-dir))
-
-(keymap-global-set "C-c n" 'nz/note-new)
-(keymap-global-set "C-c C-n" 'nz/note-list)
+;; (defvar nz/note-root-dir "~/.emacs.d/my-notes"
+;;   "Путь к папке с заметками")
+;;
+;; (setq nz/note-root-dir "c:/nz/notes")
+;;
+;; (defun nz/note-new ()
+;;   "Создать заметку"
+;;   (interactive)
+;;   (when (not (file-directory-p nz/note-root-dir))
+;;     (make-directory nz/note-root-dir))
+;;   (let ((note-name (format-time-string "%Y-%m-%d_%H%M%S.temp")))
+;;     (let ((note-path (format "%s/%s" nz/note-root-dir note-name)))
+;;       (find-file note-path))))
+;;
+;; (defun nz/note-list ()
+;;   "Показать заметки"
+;;   (interactive)
+;;   (dired nz/note-root-dir))
+;;
+;; (keymap-global-set "C-c n" 'nz/note-new)
+;; (keymap-global-set "C-c C-n" 'nz/note-list)
 
 ;; Режим языка программирования `sukabla'
 (require 'sukabla-mode)
