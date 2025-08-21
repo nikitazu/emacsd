@@ -10,6 +10,7 @@
 ;;
 
 (defun nz/directory-get-subdirs (path)
+  "Получить список полных имён директорий по указанному пути `path'."
   (if (file-directory-p path)
       (let* ((names (directory-files path))
              (names (seq-remove (lambda (x) (equal (string-match "^\\..*" x) 0)) names))
@@ -19,6 +20,9 @@
     nil))
 
 (defun nz/directory-get-files (path &optional mask-re)
+  "Получить список полных имён файлов по указанному пути `path'.
+Дополнительно имена файлов можно отфильтровать по указанной маске `mask-re'.
+Маска сверяется с файлом с помошью функции `string-match' и может быть регулярным выражением."
   (if (file-directory-p path)
       (let* ((names (directory-files path))
              (names (seq-remove (lambda (x) (equal (string-match "^\\..*" x) 0)) names))
@@ -32,30 +36,63 @@
         final-files)
     nil))
 
-(defun nz/list-concat (lst items)
-  (seq-each (lambda (x) (add-to-list 'lst x))
-            items))
+(defmacro nz/list-push-items (lst items)
+  "Добавляет элементы `items' в список `lst' (без повторов)."
+  `(seq-do (lambda (x) (add-to-list ,lst x))
+           ,items))
 
 (defun nz/list-pick-random (lst)
+  "Выбирает случайный элемент из списка `lst'."
   (nth (random (length lst))
        lst))
 
-;; Мои глобальные штучки
+(defun nz/shift-line-up ()
+  "Двигает текущую строку вверх."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+(defun nz/shift-line-down ()
+  "Двигает текущую строку вниз."
+  (interactive)
+  (forward-line)
+  (transpose-lines 1)
+  (forward-line -1))
+
+(defun nz/kill-emacs ()
+  "Выключает Emacs."
+  (interactive)
+  (let ((exit-code 1)
+        (restart-flag nil))
+    (kill-emacs exit-code restart-flag)))
+
+;; Мои глобальные настройки путей
 ;;
 
-(defvar nz/projects-directory "c:/prj")
-(defvar nz/projects-directories '())
+(defvar nz/projects-directory "c:/prj"
+  "Директория проектов.")
+
+(defvar nz/projects-directories '()
+  "Список вложенных директорий с проектами, внутри `nz/projects-directory'.")
 
 (when (not (file-directory-p nz/projects-directory))
   (setq nz/projects-directory "~/prj"))
 
-(setq nz/projects-directories
-      (nz/list-concat nz/projects-directories
-                      (nz/directory-get-subdirs nz/projects-directory)))
+(nz/list-push-items 'nz/projects-directories
+                    (nz/directory-get-subdirs nz/projects-directory))
 
-(defvar nz/org-directory "c:/nz/notes/org")
-(defvar nz/org-publish-directory "c:/nz/notes/publish")
-(defvar nz/org-files '())
+(defvar nz/org-directory "c:/nz/notes/org"
+  "Директория заметок ОРГ-режима.")
+
+(defvar nz/org-publish-directory "c:/nz/notes/publish"
+  "Директория публикации заметок ОРГ-режима.")
+
+(defvar nz/org-files '()
+  "Список файлов ОРГ-режима.
+
+Создавался для повестки дня, сейчас по нему же прыгаем в заметки функцией `org'.
+ДЕЛА: Сделать отдельную переменную для файлов повестки дня.
+ДЕЛА: Сделать отдельную переменную ведущую на оглавдение заметок для функции `org'.")
 
 (when (not (file-directory-p nz/org-directory))
   (setq nz/org-directory "~/notes/org"))
@@ -64,11 +101,11 @@
   (setq nz/org-publish-directory "~/notes/publish"))
 
 (defvar nz/org-capture-file
-  (file-name-concat nz/org-directory "10-inbox.org"))
+  (file-name-concat nz/org-directory "10-inbox.org")
+  "Путь к файлу для захвата новых преходящих заметок.")
 
-(setq nz/org-files
-      (nz/list-concat nz/org-files
-                      (nz/directory-get-files nz/org-directory "\\.org$")))
+(nz/list-push-items 'nz/org-files
+                    (nz/directory-get-files nz/org-directory "\\.org$"))
 
 
 ;; Путь к моим локальным пакетам
@@ -171,12 +208,6 @@
 ;; Разделлить окно вертикально
 (keymap-global-set "M-3" 'split-window-right)
 
-(defun nz/kill-emacs ()
-  (interactive)
-  (let ((exit-code 1)
-        (restart-flag nil))
-    (kill-emacs exit-code restart-flag)))
-
 (keymap-global-set "C-q" 'nz/kill-emacs)
 
 ;; Зум
@@ -213,19 +244,6 @@
 
 ;; Поиск с заменой
 (keymap-global-set "C-h" 'query-replace)
-
-(defun nz/shift-line-up ()
-  "Двигает текущую строку вверх"
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-(defun nz/shift-line-down ()
-  "Двигает текущую строку вниз"
-  (interactive)
-  (forward-line)
-  (transpose-lines 1)
-  (forward-line -1))
 
 (keymap-global-set "M-<up>" 'nz/shift-line-up)
 (keymap-global-set "M-<down>" 'nz/shift-line-down)
