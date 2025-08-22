@@ -248,6 +248,12 @@
 (keymap-global-set "M-<up>" 'nz/shift-line-up)
 (keymap-global-set "M-<down>" 'nz/shift-line-down)
 
+;; Отмена
+;;
+;; C-/ - отменить
+;;
+;; отменить отмену
+(keymap-global-set "C-S-/" 'undo-redo)
 
 ;; ОРГ-Режим
 ;;
