@@ -167,14 +167,14 @@ read it before opening a new issue about your will.")
 ;; Assigment form: VARIABLE COLOR [256-COLOR [TTY-COLOR]]
 (let ((colors '(;; Upstream theme color
                 (dracula-bg      "#1C1E26" "unspecified-bg" "unspecified-bg") ; official background
-                (dracula-fg      "#999E9E" "#dfdfdf" "brightwhite") ; official foreground
+                (dracula-fg      "#728196" "#dfdfdf" "brightwhite") ; official foreground
                 (dracula-current "#1a1b21" "#303030" "darkblack")   ; official current-line/selection
                 (dracula-comment "#5F698E" "#5f5faf" "blue")        ; official comment
                 (dracula-whspace "#363A49" "#484a56" "fadeblue")    ; nikitazu whitespace
                 (dracula-cyan    "#7da2c8" "#87d7ff" "brightcyan")  ; official cyan
                 (dracula-green   "#5B9955" "#5fff87" "green")       ; official green
                 (dracula-orange  "#C69055" "#ffaf5f" "brightred")   ; official orange
-                (dracula-pink    "#9e87b5" "#ff87d7" "magenta")     ; official pink
+                (dracula-pink    "#B2859E" "#ff87d7" "magenta")     ; official pink
                 (dracula-purple  "#B49ACE" "#af87ff" "brightmagenta") ; official purple
                 (dracula-red     "#ff5555" "#ff8787" "red")         ; official red
                 (dracula-yellow  "#ada893" "#ffff87" "yellow")      ; official yellow
