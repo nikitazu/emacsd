@@ -563,7 +563,7 @@
   (xref-find-apropos (thing-at-point 'symbol)))
 
 (keymap-global-set "C-S-g" 'git-grep)
-(keymap-global-set "C-g" 'git-grep-id-at-point)
+(keymap-global-set "C-c g" 'git-grep-id-at-point)
 (keymap-global-set "C-c f" 'find-usages-at-point)
 
 
