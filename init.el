@@ -101,7 +101,7 @@
   (setq nz/org-publish-directory "~/notes/publish"))
 
 (defvar nz/org-capture-file
-  (file-name-concat nz/org-directory "10-inbox.org")
+  (file-name-concat nz/org-directory "10-index.org")
   "Путь к файлу для захвата новых преходящих заметок.")
 
 (nz/list-push-items 'nz/org-files
