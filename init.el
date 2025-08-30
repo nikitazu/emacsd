@@ -212,6 +212,23 @@
 ;; Разделить окно вертикально
 (keymap-global-set "M-3" 'split-window-right)
 
+(defun split-window-right-small ()
+  "Разделить окно вертикально, сформировав окно справа.
+Окно справа будет на 16 колонок меньше окна слева."
+  (interactive)
+  (split-window-right)
+  (enlarge-window-horizontally 16))
+
+(defun split-window-below-small ()
+  "Разделить окно горизонтально, сформировав окно внизу.
+Окно внизу будет на 16 строк меньше окна всерху."
+  (interactive)
+  (split-window-below)
+  (enlarge-window 8))
+
+(keymap-global-set "M-8" 'split-window-right-small)
+(keymap-global-set "M-9" 'split-window-below-small)
+
 ;; Переключиться между буферами: назад / вперёд
 (keymap-global-set "M-p" 'previous-buffer)
 (keymap-global-set "M-n" 'next-buffer)
