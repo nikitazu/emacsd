@@ -184,7 +184,7 @@
     '(("\\<\\(TODO\\)" 1 font-lock-warning-face prepend)
       ("\\<\\(ДЕЛА\\)" 1 font-lock-warning-face prepend)
       ("\\<\\(ДУМА\\)" 1 font-lock-warning-face prepend)
-      ("\\<\\(ЖОПА\\)" 1 font-lock-warning-face prepend)
+      ("\\<\\(ЛАЖА\\)" 1 font-lock-warning-face prepend)
       ("\\<\\(and\\|or\\|not\\)\\>" . font-lock-keyword-face)))))
 
 
@@ -273,6 +273,10 @@
 
 (keymap-global-set "M-<up>" 'nz/shift-line-up)
 (keymap-global-set "M-<down>" 'nz/shift-line-down)
+
+;; imenu
+;; M-g i - запускает imenu,
+;;         которое позволяет выбрать/найти имя функции и прыгнуть к ней
 
 ;; Отмена
 ;;
