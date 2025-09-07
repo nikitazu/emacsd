@@ -530,7 +530,7 @@
 ;; Комбинация, начинающаяя команды projectile
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-project-search-path nz/projects-directories)
-
+(add-to-list 'projectile-globally-ignored-directories ".vs")
 
 ;; Экран запуска
 ;; Дока: https://github.com/emacs-dashboard/emacs-dashboard
