@@ -291,20 +291,91 @@
 (setq org-todo-keywords
       '((sequence "ДЕЛА" "ВРАБ" "ГОТВ")))
 
+(defun zk-capture-note-location ()
+  "Открывает новый файл с заметкой."
+  (let* ((id (zk-new-id))
+         (name (format "%s.org" id))
+         (path (file-name-concat nz/org-directory "30-notes" name)))
+    (find-file path))
+  (goto-char (point-max)))
+
+(defun zk-capture-note-template ()
+  "Возвращает шаблон заметки."
+  (with-temp-buffer
+    (insert-file-contents (file-name-concat nz/org-directory "_setup" "note.template"))
+    (buffer-string)))
+
+(defun zk-capture-reference-location ()
+  "Открывает новый файл с отсылкой."
+  (let* ((id (zk-new-id))
+         (name (format "%s.org" id))
+         (path (file-name-concat nz/org-directory "20-refs" name)))
+    (find-file path))
+  (goto-char (point-max)))
+
+(defun zk-capture-reference-template ()
+  "Возвращает шаблон отсылки."
+  (with-temp-buffer
+    (insert-file-contents (file-name-concat nz/org-directory "_setup" "reference.template"))
+    (buffer-string)))
+
+(defun zk-convert-idea-to-file (file-title file-location template-text)
+  "Конвертирует текущую идею в файл.
+
+Имя файла генерируется из результата функции `zk-new-id' и параметра `file-title'
+с расширением `.org'. Файл будет создан в директории `file-location'.
+Текст файла будет состоять из строки `template-text' и содержимого текущей записи в `org-mode'.
+"
+  (let* ((id (zk-new-id))
+         (note-title (org-get-heading))
+         (note-title-prop (format "#+TITLE: %s" note-title))
+         (note-entry (org-get-entry))
+         (name (format "%s--%s.org" id file-title))
+         (path (file-name-concat file-location name))
+         (template-text (replace-regexp-in-string "#\\+TITLE: TODO_PUT_TITLE"
+                                                  note-title-prop
+                                                  template-text)))
+    (find-file path)
+    (goto-char (point-max))
+    (insert template-text)
+    (insert note-entry)))
+
+(defun zk-convert-idea-to-note (file-title)
+  "Конвертирует текущую идею в заметку."
+  (interactive "sEnter file title: ")
+  (zk-convert-idea-to-file file-title
+                           (file-name-concat nz/org-directory "30-notes")
+                           (zk-capture-note-template)))
+
+(defun zk-convert-idea-to-reference (file-title)
+  "Конвертирует текущую идею в отылку."
+  (interactive "sEnter file title: ")
+  (zk-convert-idea-to-file file-title
+                           (file-name-concat nz/org-directory "20-refs")
+                           (zk-capture-reference-template)))
+
 (setq org-capture-templates
       '(("t" "Task (Задача)" entry
          (file+headline nz/org-capture-file "Задачи")
          "* ДЕЛА %?\n  %i\n  %a"
          :empty-lines-before 1)
 
-        ("n" "Note (Заметка)" entry
-         (file+headline nz/org-capture-file "Заметки")
+        ("i" "Idea (Идея)" entry
+         (file+headline nz/org-capture-file "Идеи")
          "\
 * %?\n\n\
 %i\n\
 Записано: %T\n\
 Контекст: %a\n"
          :empty-lines-before 1)
+
+        ("n" "Note (Заметка)" plain
+         (function zk-capture-note-location)
+         (function zk-capture-note-template))
+
+        ("r" "Reference (Отсылка)" plain
+         (function zk-capture-reference-location)
+         (function zk-capture-reference-template))
 
         ("e" "Experimental (Экспериментальная запись)" entry
          (file+headline nz/org-capture-file "Заметки")
@@ -344,6 +415,88 @@
          :publishing-directory ,nz/org-publish-directory
          :recursive t
          :publishing-function org-html-publish-to-html)))
+
+
+
+
+(org-link-set-parameters "zk"
+                         :follow #'org-zk-open
+                         :export #'org-zk-export
+                         :store #'org-zk-store-link)
+
+(defun zk (id)
+  "Обработчик ссылок на заметки Zettelkasten."
+  (find-file (zk-find-file-path id)))
+
+(defun zk-new-id ()
+  "Создать новый ИД заметки."
+  (format-time-string "%y%m%d%H%M%S"))
+
+(defun zk-find-file-path (id)
+  "Найти файл заметки по ИД `id' и вернуть его путь."
+  (let* ((mask-re   (concat "/" id "[^.]+\\.org$"))
+         (refs-dir  (file-name-concat nz/org-directory "20-refs"))
+         (notes-dir (file-name-concat nz/org-directory "30-notes"))
+         (files     (nz/directory-get-files refs-dir mask-re))
+         (files     (if (null files)
+                        (nz/directory-get-files notes-dir mask-re)
+                      files)))
+    (if (null files)
+        (error "Заметка не найдена по ИД: %s" id)
+      (car files))))
+
+(defcustom org-zk-command 'zk
+  "The Emacs command to be used to display a Zettelkasten note."
+  :group 'org-zk
+  :type '(choice (const note) (const ref)))
+
+(defun org-zk-open (path _)
+  "Visit the note on PATH.
+     PATH should be a Zettelkasten note ID."
+  (funcall org-zk-command path))
+
+(defun org-zk-store-link ()
+  "Store a link to a Zettelkasten note."
+  (when (memq major-mode '(org-mode))
+    ;; This is a Zettelkasten note, we do make this link.
+    (let* ((id (org-zk-get-id))
+           (link (concat "zk:" page))
+           (description (org-zk-get-title)))
+      (org-link-store-props
+       :type "zk"
+       :link link
+       :description description))))
+
+(defun org-zk-get-id ()
+  "Extract the note ID from the buffer name."
+  ;; This works for `org-mode'.
+  (let ((name (buffer-name)))
+    (if (string-match "^\\([0-9]+\\)--" name)
+        (match-string 1 name)
+      (error "Cannot get note id from buffer name: %s" name))))
+
+(defun org-zk-get-title ()
+  "Extract the note title from the buffer name."
+  ;; This works for `org-mode'.
+  (let ((name (buffer-name)))
+    (if (string-match "^\\([0-9]+\\)--\\([^\\.]+\\)\\.org$" name)
+        (match-string 2 name)
+      (error "Cannot get note title from buffer name: %s" name))))
+
+(defun org-zk-export (link description format _)
+  "Export a zettelkasten note link from Org files."
+  ;; TODO: replace target file extension
+  (let ((path (zk-find-file-path link))
+        (desc (or description link)))
+    (pcase format
+      (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" path desc))
+      (`latex (format "\\href{%s}{%s}" path desc))
+      (`texinfo (format "@uref{%s,%s}" path desc))
+      (`ascii (format "%s (%s)" desc path))
+      (t path))))
+
+
+
 
 ;; Пакетный менеджер
 ;;
