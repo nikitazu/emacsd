@@ -107,6 +107,16 @@
 (nz/list-push-items 'nz/org-files
                     (nz/directory-get-files nz/org-directory "\\.org$"))
 
+;; Woman (unix man pages)
+;;
+;; Для Windows самый простой способ обеспечения доступа к мануалам:
+;;
+;; 1. Зайти по ssh в линукс
+;; 2. Установить нужные мануалы
+;; 3. Скопировать через scp на Windows машину содержимое man страниц
+;;
+(when (file-directory-p "c:/man")
+  (setq woman-manpath "c:/man"))
 
 ;; Путь к моим локальным пакетам
 ;;
