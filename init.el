@@ -115,6 +115,7 @@
 ;; 2. Установить нужные мануалы
 ;; 3. Скопировать через scp на Windows машину содержимое man страниц
 ;;
+(require 'woman)
 (when (file-directory-p "c:/man")
   (setq woman-manpath "c:/man"))
 
