@@ -175,7 +175,7 @@ read it before opening a new issue about your will.")
                 (dracula-green   "#5B9955" "#5fff87" "green")       ; official green
                 (dracula-orange  "#C69055" "#ffaf5f" "brightred")   ; official orange
                 (dracula-pink    "#A2758E" "#ff87d7" "magenta")     ; official pink
-                (dracula-purple  "#9580A0" "#af87ff" "brightmagenta") ; official purple
+                (dracula-purple  "#8C82AD" "#af87ff" "brightmagenta") ; official purple
                 (dracula-red     "#ff5555" "#ff8787" "red")         ; official red
                 (dracula-yellow  "#ada893" "#ffff87" "yellow")      ; official yellow
                 ;; Other colors
