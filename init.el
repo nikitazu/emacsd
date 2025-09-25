@@ -288,8 +288,8 @@
 (keymap-global-set "M-<up>" 'nz/shift-line-up)
 (keymap-global-set "M-<down>" 'nz/shift-line-down)
 
-;; C-M-b - прыгнуть к предыдущей паркной скобке
-;; C-M-n - прыгнуть к следующей парной скобке
+;; C-M-b / C-M-p - прыгнуть к предыдущей паркной скобке
+;; C-M-f / C-M-n - прыгнуть к следующей парной скобке
 
 ;; imenu
 ;; M-g i - запускает imenu,
