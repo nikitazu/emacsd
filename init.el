@@ -524,9 +524,15 @@
 ;; M-x package-install           Установить пакет
 ;;
 (require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
+;; Автоустановка пакетов
+;;
+(unless (package-installed-p 'which-key)
+  (package-refresh-contents)
+  (package-install-selected-packages))
 
 ;; Фуззи-автокомплит
 ;; IVY (из пакета counsel)
