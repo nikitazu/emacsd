@@ -329,6 +329,25 @@
 ;; который иначе выскакивает при закрытии emacs
 (setq save-abbrevs nil)
 
+;; Файловая навигация (dired)
+;;
+;; h - справка по режиму
+;; n - след. файл
+;; p - пред. файл
+;; m - выделить файл
+;; u - снять выделение
+;; M - снять все выделения
+;; t - инвертировать выделения
+;; R - переименовать файл
+;;
+(defun nz/dired-mode-hook ()
+  "Настройка всякого для Dired режима (файлового навигатора)."
+  (whitespace-mode -1)
+  (define-key dired-mode-map (kbd "b") 'dired-up-directory)
+  (define-key dired-mode-map (kbd "C-<return>") 'dired-display-file))
+
+(add-hook 'dired-mode-hook 'nz/dired-mode-hook)
+
 ;; ОРГ-Режим
 ;;
 (require 'org)
