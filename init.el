@@ -226,6 +226,14 @@
 ;; Разделить окно вертикально
 (keymap-global-set "M-3" 'split-window-right)
 
+;; Уменьшить/увеличить окно вертикально
+(keymap-global-set "M-[" 'shrink-window)
+(keymap-global-set "M-]" 'enlarge-window)
+
+;; Уменьшить/увеличить окно горизонтально
+(keymap-global-set "M-{" 'shrink-window-horizontally)
+(keymap-global-set "M-}" 'enlarge-window-horizontally)
+
 (defun split-window-right-small ()
   "Разделить окно вертикально, сформировав окно справа.
 Окно справа будет на 16 колонок меньше окна слева."
