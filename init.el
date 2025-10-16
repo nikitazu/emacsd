@@ -310,6 +310,25 @@
 ;; отменить отмену
 (keymap-global-set "C-S-/" 'undo-redo)
 
+;; Сокращения (Abbrev, они же снипеты)
+;;
+(add-hook 'c-mode-hook 'abbrev-mode)
+
+(defun nz/c-define-struct ()
+  "Вставляет определение структуры на языке C, предварительно запросив её название."
+  (interactive)
+  (let ((name (read-string "Enter struct name: ")))
+    (insert (format "typedef struct %s\n{\n} %s;" name name)))
+  (previous-line))
+
+(define-abbrev-table 'c-mode-abbrev-table
+  `(("cstruct" "" nz/c-define-struct)))
+
+;; нам не нужно сохранять снипеты в файл, т.к. мы их определяем в конфиге
+;; вражение ниже отключает диалог с вопросом о сохранении снипетов в файл,
+;; который иначе выскакивает при закрытии emacs
+(setq save-abbrevs nil)
+
 ;; ОРГ-Режим
 ;;
 (require 'org)
