@@ -707,6 +707,18 @@
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
 
+;; Работа с гитом (magit)
+;;
+(setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
+(setq magit-bury-buffer-function 'magit-restore-window-configuration)
+
+(defun nz/magit-mode-hook ()
+  "Настройка всякого для magit режима."
+  (whitespace-mode -1))
+
+(add-hook 'magit-mode-hook 'nz/magit-mode-hook)
+
+
 ;; Сборка и компиляция
 ;;
 
