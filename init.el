@@ -724,7 +724,7 @@
 ;; s       Застейджить изменения
 ;; k       Отбросить изменения
 ;; i t     Заигнорить файл
-;; c c     Закоммитить
+;; C-c C-c Закоммитить
 ;; P u     Пушнуть
 ;;
 (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
