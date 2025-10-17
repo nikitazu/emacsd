@@ -163,6 +163,13 @@
 ;; Отображение номеров строк
 (global-display-line-numbers-mode)
 
+;; Скрытие отображения номеров строк для некоторых режимов
+(dolist (mode '(term-mode-hook
+                shell-mode-hook
+                eshell-mode-hook
+                dired-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 ;; Отображение номера текущей колонки
 (setq column-number-mode t)
 
@@ -709,6 +716,16 @@
 
 ;; Работа с гитом (magit)
 ;;
+;; C-x g   Получить статус git (режим magit)
+;;
+;; В режиме magit
+;;
+;; n, p    Навигация по изменениям
+;; s       Застейджить изменения
+;; k       Отбросить изменения
+;; c c     Закоммитить
+;; P u     Пушнуть
+;;
 (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
 (setq magit-bury-buffer-function 'magit-restore-window-configuration)
 
@@ -724,7 +741,6 @@
 
 ;; M-x compile Запуск компиляции из командной строки
 ;; C-c c       Запуск compile
-;; C-x g       Статус гита через magit пакет
 
 (keymap-global-set "C-c c" 'compile)
 (keymap-global-set "C-c e" 'eshell)
