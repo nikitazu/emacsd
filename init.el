@@ -114,21 +114,36 @@
 ;; 1. Зайти по ssh в линукс
 ;; 2. Установить нужные мануалы
 ;; 3. Скопировать через scp на Windows машину содержимое man страниц
-;;    scp -R ao:/usr/share/man/man1/* c:/man/man1/
-;;    scp -R ao:/usr/share/man/man2/* c:/man/man2/
-;;    scp -R ao:/usr/share/man/man3/* c:/man/man3/
-;;    scp -R ao:/usr/share/man/man4/* c:/man/man4/
-;;    scp -R ao:/usr/share/man/man5/* c:/man/man5/
-;;    scp -R ao:/usr/share/man/man6/* c:/man/man6/
-;;    scp -R ao:/usr/share/man/man7/* c:/man/man7/
-;;    scp -R ao:/usr/share/man/man8/* c:/man/man8/
+;;    scp -r -B ao:/usr/share/man/man* c:/man
+;;    (прим. просто вызвать `nz/woman-copy-man' передав параметром `ao')
 ;;
 (require 'woman)
-(when (file-directory-p "c:/man")
-  (setq woman-manpath '("c:/man")))
+(defconst nz/woman-manpath "c:/man")
+(when (file-directory-p nz/woman-manpath)
+  (setq woman-manpath (list nz/woman-manpath)))
 
 ;; Ищет идентификатор под курсором в man страницах
 (keymap-global-set "C-c w" 'woman-follow)
+
+
+(defun nz/woman-copy-man (hostname)
+  "Скачать мануалы с линуксового сервера `hostname'.
+
+Примечание: scp ругается на некоторые файлы внутри /usr/share/man
+            что вот не может их найти, но такие файлы пропускаются
+            и большая часть мануалов скачивается успешно.
+"
+  (interactive "sHostname: ")
+  (let ((process-name "nz/woman-copy-man")
+        (buffer-name  "*nz/woman-copy-man-log*")
+        (target-dir   nz/woman-manpath))
+    (unless (file-directory-p target-dir)
+      (error "WoMan manpath directory not found: %s" target-dir))
+    (switch-to-buffer-other-window buffer-name)
+    (insert (format "Start: %s\n" (current-time-string)))
+    (start-process process-name
+                   buffer-name
+                   "scp" "-r" "-B" (format "%s:/usr/share/man/man*" hostname) target-dir)))
 
 ;; Путь к моим локальным пакетам
 ;;
