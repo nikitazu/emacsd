@@ -389,10 +389,10 @@
     (insert-file-contents (file-name-concat nz/org-directory "_setup" "reference.template"))
     (buffer-string)))
 
-(defun zk-convert-idea-to-file (file-title file-location template-text)
+(defun zk-convert-idea-to-file (file-name file-location template-text)
   "Конвертирует текущую идею в файл.
 
-Имя файла генерируется из результата функции `zk-new-id' и параметра `file-title'
+Имя файла генерируется из результата функции `zk-new-id' и параметра `file-name'
 с расширением `.org'. Файл будет создан в директории `file-location'.
 Текст файла будет состоять из строки `template-text' и содержимого текущей записи в `org-mode'.
 "
@@ -400,29 +400,51 @@
          (note-title (org-get-heading))
          (note-title-prop (format "#+TITLE: %s" note-title))
          (note-entry (org-get-entry))
-         (name (format "%s--%s.org" id file-title))
+         (name (format "%s--%s.org" id file-name))
          (path (file-name-concat file-location name))
          (template-text (replace-regexp-in-string "#\\+TITLE: TODO_PUT_TITLE"
                                                   note-title-prop
-                                                  template-text)))
+                                                  template-text
+                                                  t)))
     (find-file path)
     (goto-char (point-max))
     (insert template-text)
     (insert note-entry)))
 
-(defun zk-convert-idea-to-note (file-title)
+(defun zk-convert-idea-to-note (file-name)
   "Конвертирует текущую идею в заметку."
-  (interactive "sEnter file title: ")
-  (zk-convert-idea-to-file file-title
+  (interactive "sИмя файла: ")
+  (zk-convert-idea-to-file file-name
                            (file-name-concat nz/org-directory "30-notes")
                            (zk-capture-note-template)))
 
-(defun zk-convert-idea-to-reference (file-title)
+(defun zk-convert-idea-to-reference (file-name)
   "Конвертирует текущую идею в отылку."
-  (interactive "sEnter file title: ")
-  (zk-convert-idea-to-file file-title
+  (interactive "sИмя файла: ")
+  (zk-convert-idea-to-file file-name
                            (file-name-concat nz/org-directory "20-refs")
                            (zk-capture-reference-template)))
+
+(defun zk-add-current-buffer-to-index ()
+  "Добавляет текущий буфер (заметку или отсылку) в индекс."
+  (interactive)
+  (let* ((path         (buffer-file-name))
+         (id           (zk-get-id-from-file-path path))
+         (title        (org-get-title))
+         (link         (format "[[zk:%s][%s]]" id title))
+         (buffer-err   "Текущий буфер не является заметкой или отсылкой")
+         (heading-name (cond
+                         ((string-match-p "20-refs" path) "Отсылки")
+                         ((string-match-p "30-notes" path) "Заметки")
+                         (t (error buffer-err)))))
+    (org)
+    (let ((ideas-marker (org-find-exact-headline-in-buffer heading-name)))
+      (when (null ideas-marker)
+        (error "Не удалось найти заголовок '%s' для вставки ссылки"
+               heading-name))
+      (goto-char ideas-marker)
+      (org-insert-subheading nil)
+      (insert link))))
 
 (setq org-capture-templates
       '(("t" "Task (Задача)" entry
@@ -474,6 +496,8 @@
 (defun nz/org-mode-hook ()
   "Настройка всякого для ОРГ режима."
   (setq-local whitespace-line-column 500) ; для длинных ссылок
+  (modify-syntax-entry ?< "." org-mode-syntax-table) ; фикс для < в лиспе в сорс блоках
+  (modify-syntax-entry ?> "." org-mode-syntax-table) ; фикс для > в лиспе в сорс блоках
   (define-key org-mode-map (kbd "C-c x") 'org-toggle-checkbox)
   (define-key org-mode-map (kbd "C-c i") 'org-info))
 
@@ -514,6 +538,12 @@
     (if (null files)
         (error "Заметка не найдена по ИД: %s" id)
       (car files))))
+
+(defun zk-get-id-from-file-path (path)
+  "Вычислить ИД на основе имени файла `path'."
+  (let* ((name-ext (file-name-nondirectory path))
+         (name     (file-name-sans-extension name-ext)))
+    (substring name 0 12)))
 
 (defcustom org-zk-command 'zk
   "The Emacs command to be used to display a Zettelkasten note."
