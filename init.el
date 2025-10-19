@@ -118,7 +118,7 @@
 ;;
 (require 'woman)
 (when (file-directory-p "c:/man")
-  (setq woman-manpath "c:/man"))
+  (setq woman-manpath '("c:/man")))
 
 ;; Ищет идентификатор под курсором в man страницах
 (keymap-global-set "C-c w" 'woman-follow)
