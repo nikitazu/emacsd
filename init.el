@@ -402,6 +402,8 @@
          (note-entry (org-get-entry))
          (name (format "%s--%s.org" id file-name))
          (path (file-name-concat file-location name))
+         ;; ДЕЛА также нужно заменить %U на метку времени
+         ;;      (inactive timestamp with current date and time)
          (template-text (replace-regexp-in-string "#\\+TITLE: TODO_PUT_TITLE"
                                                   note-title-prop
                                                   template-text
