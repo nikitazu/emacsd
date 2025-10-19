@@ -114,6 +114,7 @@
 ;; 1. Зайти по ssh в линукс
 ;; 2. Установить нужные мануалы
 ;; 3. Скопировать через scp на Windows машину содержимое man страниц
+;;    scp -R ao:/usr/share/man/* c:/man
 ;;
 (require 'woman)
 (when (file-directory-p "c:/man")
