@@ -427,10 +427,13 @@
          (note-entry (org-get-entry))
          (name (format "%s--%s.org" id file-name))
          (path (file-name-concat file-location name))
-         ;; ДЕЛА также нужно заменить %U на метку времени
-         ;;      (inactive timestamp with current date and time)
+         (timestamp (format-time-string "%Y-%m-%d"))
          (template-text (replace-regexp-in-string "#\\+TITLE: TODO_PUT_TITLE"
                                                   note-title-prop
+                                                  template-text
+                                                  t))
+         (template-text (replace-regexp-in-string "%U"
+                                                  timestamp
                                                   template-text
                                                   t)))
     (find-file path)
@@ -547,6 +550,9 @@
 
 (defun zk (id)
   "Обработчик ссылок на заметки Zettelkasten."
+  ;; ДЕЛА расширить АПИ чтобы после ID
+  ;;      можно было указать поисковый терм по телу заметки
+  ;;      аналогично файловым ссылкам
   (find-file (zk-find-file-path id)))
 
 (defun zk-new-id ()
@@ -620,7 +626,7 @@
       (`latex (format "\\href{%s}{%s}" path desc))
       (`texinfo (format "@uref{%s,%s}" path desc))
       (`ascii (format "%s (%s)" desc path))
-      (t path))))
+      (_ path))))
 
 
 
