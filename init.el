@@ -187,10 +187,12 @@
 (global-display-line-numbers-mode)
 
 ;; Скрытие отображения номеров строк для некоторых режимов
-(dolist (mode '(term-mode-hook
-                shell-mode-hook
+(dolist (mode '(dired-mode-hook
                 eshell-mode-hook
-                dired-mode-hook))
+                org-mode-hook
+                shell-mode-hook
+                term-mode-hook
+                woman-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Отображение номера текущей колонки
