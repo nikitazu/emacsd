@@ -970,6 +970,43 @@
 (autoload 'run-scheme "cmuscheme" "Switch to interactive Scheme buffer." t)
 (setq auto-mode-alist (cons '("\\.ss" . scheme-mode) auto-mode-alist))
 
+;; Автосвитчер РУС/АНГ
+;;
+
+(defconst nz/keyswitch-latin "qwertyuiop[]asdfghjkl;'zxcvbnm,./")
+(defconst nz/keyswitch-kiril "йцукенгшщзхъфывапролджэячсмитьбю.")
+
+(defconst nz/keyswitch-latin-to-kiril-map (make-hash-table :test 'equal))
+(defconst nz/keyswitch-kiril-to-latin-map (make-hash-table :test 'equal))
+
+(dotimes (i (length nz/keyswitch-latin))
+  (let ((latin-char (char-to-string (aref nz/keyswitch-latin i)))
+        (kiril-char (char-to-string (aref nz/keyswitch-kiril i))))
+    (puthash latin-char kiril-char nz/keyswitch-latin-to-kiril-map)
+    (puthash kiril-char latin-char nz/keyswitch-kiril-to-latin-map)))
+
+(defun nz/keyswitch-string (s)
+  (let ((len (length s)))
+    (with-output-to-string
+      (dotimes (i len)
+        (let* ((c        (char-to-string (aref s i)))
+               (latin-c  (gethash c nz/keyswitch-latin-to-kiril-map))
+               (kiril-c  (gethash c nz/keyswitch-kiril-to-latin-map))
+               (result-c (if (null latin-c)
+                             (if (null kiril-c)
+                                 c
+                               kiril-c)
+                           latin-c)))
+          (princ result-c))))))
+
+(defun nz/keyswitch-buffer (beginning end)
+  "Переключает раскладку текста в выделенном регионе буфера."
+  (interactive "r")
+  (let ((region-text (buffer-substring-no-properties beginning end)))
+    (delete-region beginning end)
+    (insert (nz/keyswitch-string region-text))))
+
+(keymap-global-set "C-c s" 'nz/keyswitch-buffer)
 
 ;; ДЕЛА хук на открытие файла - если он в заметках - добавлять в файл истории с датой открытия
 ;;      если он там уже есть то двигать наверх и обновлять дату
