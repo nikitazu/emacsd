@@ -149,6 +149,7 @@
 ;;
 
 (add-to-list 'load-path "~/.emacs.d/my-packages")
+(require 'uuid)
 
 ;; Пакет Custom
 ;;
@@ -288,7 +289,7 @@
 (keymap-global-set "M-n" 'next-buffer)
 
 ;; Завершить процесс Emacs
-(keymap-global-set "C-q" 'nz/kill-emacs)
+(keymap-global-set "C-x q" 'nz/kill-emacs)
 
 ;; Зум
 ;;
@@ -487,8 +488,7 @@
          "\
 * %?\n\n\
 %i\n\
-Записано: %T\n\
-Контекст: %a\n"
+Записано: %T\n"
          :empty-lines-before 1)
 
         ("n" "Note (Заметка)" plain
@@ -668,8 +668,15 @@
 (projectile-mode +1)
 ;; Комбинация, начинающаяя команды projectile
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(setq projectile-indexing-method 'native)
 (setq projectile-project-search-path nz/projects-directories)
 (add-to-list 'projectile-globally-ignored-directories ".vs")
+(add-to-list 'projectile-globally-ignored-directories ".pixi")
+(add-to-list 'projectile-globally-ignored-directories "__pycache__")
+;; игнор фильтры - не работают
+;;(add-to-list 'projectile-globally-ignored-file-suffixes ".exe")
+;;(add-to-list 'projectile-globally-ignored-file-suffixes ".dll")
+;;(add-to-list 'projectile-globally-ignored-file-suffixes ".lib")
 
 ;; Экран запуска
 ;; Дока: https://github.com/emacs-dashboard/emacs-dashboard
@@ -677,17 +684,17 @@
 (require 'dashboard)
 (dashboard-setup-startup-hook)
 (setq dashboard-projects-backend 'projectile)
-(setq dashboard-items '((recents   . 5)
-                        (projects  . 5)
-                        (agenda    . 5)
-                                        ;(bookmarks . 5)
-                                        ;(registers . 5)
+(setq dashboard-items '((recents   . 4)
+                        (projects  . 4)
+                        ;;(agenda    . 4)
+                        ;;(bookmarks . 4)
+                        ;;(registers . 4)
                         ))
 (setq dashboard-item-shortcuts '((recents   . "r")
                                  (projects  . "p")
-                                 (agenda    . "a")
-                                        ;(bookmarks . "m")
-                                        ;(registers . "e")
+                                 ;;(agenda    . "a")
+                                 ;;(bookmarks . "m")
+                                 ;;(registers . "e")
                                  ))
 (setq dashboard-startup-banner 'ascii)
 (setq nz/dashboard-banner-ascii-1 "\
@@ -749,6 +756,34 @@
              nz/dashboard-banner-ascii-3
              nz/dashboard-banner-ascii-4
              nz/dashboard-banner-ascii-5)))
+
+(setq dashboard-footer-messages
+      '("Поручик Ржевский переспал со шлюхой. Одевается и идёт к двери. Девица кричит:\n\
+> — Стой, а деньги?!\n\
+> — Мадам! Гусары денег не берут."
+
+        "Наташа Ростова загадывает поручику Ржевскому загадку:\n\
+> — Поручик, угадайте-ка, что это такое: маленькое, серенькое, в половую щёлку — вжик!\n\
+> Поручик мнётся:\n\
+> — Наташа, но это же неприлично!\n\
+> — Поручик, ну, что вы! Это же мышка!\n\
+> Поручик удивлённо снимает пенсне:\n\
+> — Мышь?! В пизде?!.. Оригинально-c!"
+
+        "Беседуют Наташа Ростова и поручик Ржевский. Наташа держит в руке бокал:\n\
+> — Как я люблю шампанское! Оно такое игристое, его пузырьки — словно брызги солнца.\n\
+> — Я тоже люблю шампанское. А пива я не пью — я от него пердю."
+
+        "У поручика Ржевского спрашивают:\n\
+> — Скажите, поручик, а вам случалось попадать в катастрофы на железной дороге?\n\
+> — Было! Однажды было! Еду в купе с генералом и его дочкой.\n\
+>   Заехали в туннель — темнотища!\n\
+>   Я возьми и трахни по ошибке не дочку, а генерала! Катастрофа-с!"
+
+        "Поручика Ржевского на балу обступили дамы и просят:\n\
+> — Поручик, вы, говорят, мастер придумывать каламбуры… Ну сочините какой-нибудь каламбур!\n\
+> Поручик, недолго думая, отвечает:\n\
+> — Запросто! Калом — бур, а телом — бел…"))
 
 ;(setq dashboard-week-agenda t)
 ;(setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
@@ -923,6 +958,12 @@
   (let ((project-dir (nz/shell-command-to-string "git rev-parse --show-toplevel")))
     (compile (format "cd %s && test.cmd" project-dir))))
 
+(defun nz/release ()
+  "Запуск скрипта создания релизной сборки"
+  (interactive)
+  (let ((project-dir (nz/shell-command-to-string "git rev-parse --show-toplevel")))
+    (compile (format "cd %s && release.cmd" project-dir))))
+
 (defun nz/package ()
   "Запуск скрипта упаковки дистрибутива ПО"
   (interactive)
@@ -933,6 +974,17 @@
 (keymap-global-set "<f5>" 'nz/run)
 (keymap-global-set "<f6>" 'nz/build)
 (keymap-global-set "<f7>" 'nz/test)
+(keymap-global-set "<f8>" 'nz/release)
+
+
+(defun nz/eval-c-buffer ()
+  (interactive)
+  (nz/eval-c-region (point-min) (point-max)))
+
+(defun nz/eval-c-region (beginning end)
+  (interactive "r")
+  (let* ((command (format "clang -x c - && .\\a.exe & del .\\a.exe")))
+    (shell-command-on-region beginning end command "*EVAL-C-OUTPUT*")))
 
 
 ;; Заметки - ЗАМОРОЖЕНО (будем юзать орг-режим)
