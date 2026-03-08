@@ -757,6 +757,9 @@
              nz/dashboard-banner-ascii-4
              nz/dashboard-banner-ascii-5)))
 
+(setq dashboard-banner-logo-title
+      (replace-regexp-in-string "\n" "" (emacs-version)))
+
 (setq dashboard-footer-messages
       '("Поручик Ржевский переспал со шлюхой. Одевается и идёт к двери. Девица кричит:\n\
 > — Стой, а деньги?!\n\
