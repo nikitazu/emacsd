@@ -324,13 +324,21 @@
 (keymap-global-set "C-c d" 'duplicate-line)
 
 ;; Поиск с заменой
-(keymap-global-set "C-h" 'query-replace)
+(keymap-global-set "C-c h" 'query-replace)
 
 (keymap-global-set "M-<up>" 'nz/shift-line-up)
 (keymap-global-set "M-<down>" 'nz/shift-line-down)
 
+;; Ремаппинг основного управления
+
+(keymap-global-set "C-a" 'counsel-M-x)
+
 ;; C-M-b / C-M-p - прыгнуть к предыдущей паркной скобке
 ;; C-M-f / C-M-n - прыгнуть к следующей парной скобке
+(keymap-global-set "C-<down>" 'forward-paragraph)
+(keymap-global-set "C-<up>" 'backward-paragraph)
+(keymap-global-set "C-M-<down>" 'forward-list)
+(keymap-global-set "C-M-<up>" 'backward-list)
 
 ;; imenu
 ;; M-g i - запускает imenu,
