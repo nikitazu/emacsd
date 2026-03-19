@@ -169,7 +169,7 @@
                     :font "Consolas"
                     :height 180)
 
-(add-to-list 'default-frame-alist '(font . "Consolas-16"))
+(add-to-list 'default-frame-alist '(font . "Consolas-14"))
 
 ;; Запускать развёрнутым на весь экран
 ;(add-hook 'window-setup-hook 'toggle-frame-maximized t)
