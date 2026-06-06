@@ -768,6 +768,36 @@
 (setq dashboard-banner-logo-title
       (replace-regexp-in-string "\n" "" (emacs-version)))
 
+(setq dashboard-set-navigator t)
+(setq dashboard-navigator-buttons
+      '(
+        ;; Формат: иконка заголовок справка действие [FACE префикс суффикс]
+        ;;
+
+        ;; навигационная строка 1
+        (("✎" "Заметки" "Открыть заметки (ОРГ режим)"
+          (lambda (&rest _)
+            (org)))
+
+         ("✪" "Архив" "Открыть архив (ОРГ режим)"
+          (lambda (&rest _)
+            (find-file (file-name-concat nz/org-directory "80-archive.org"))))
+
+         ("✦" "Проекты" "Открыть папку проектов"
+          (lambda (&rest _)
+            (prj)))
+
+         ("♣" "Настройки" "Открыть файл настроек"
+          (lambda (&rest _)
+            (config))))
+
+        ;; навигационная строка 2
+        ;; (("✎" "ОРГ" "ОРГ режим" (lambda (&rest _)
+        ;;                           (org)))
+        ;;  ("★" "ОРГ" "ОРГ режим" (lambda (&rest _)
+        ;;                           (org))))
+        ))
+
 (setq dashboard-footer-messages
       '("Поручик Ржевский переспал со шлюхой. Одевается и идёт к двери. Девица кричит:\n\
 > — Стой, а деньги?!\n\
@@ -914,6 +944,11 @@
   (interactive)
   (when (not (null nz/org-files))
     (find-file (car nz/org-files))))
+
+(defun щкп ()
+  "Перейти к ОРГ файлу заметок"
+  (interactive)
+  (org))
 
 (defun prj ()
   "Перейти к директории проектов"
