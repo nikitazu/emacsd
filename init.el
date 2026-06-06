@@ -104,8 +104,8 @@
   (file-name-concat nz/org-directory "10-index.org")
   "Путь к файлу для захвата новых преходящих заметок.")
 
-(nz/list-push-items 'nz/org-files
-                    (nz/directory-get-files nz/org-directory "\\.org$"))
+(setq nz/org-files
+      (sort (nz/directory-get-files nz/org-directory "\\.org$") #'string<))
 
 ;; Woman (unix man pages)
 ;;
