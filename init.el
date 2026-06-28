@@ -148,6 +148,7 @@
 ;; Путь к моим локальным пакетам
 ;;
 
+(add-to-list 'load-path "~/.emacs.d/copied-packages")
 (add-to-list 'load-path "~/.emacs.d/my-packages")
 (require 'uuid)
 
@@ -1105,6 +1106,13 @@
     (insert (nz/keyswitch-string region-text))))
 
 (keymap-global-set "C-c s" 'nz/keyswitch-buffer)
+
+;;;; Пакет для работы с шейдерами GLSL
+;;
+(require 'glsl-mode)
+(setq auto-mode-alist (cons '("\\.fs" . glsl-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.vs" . glsl-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.glsl" . glsl-mode) auto-mode-alist))
 
 ;; ДЕЛА хук на открытие файла - если он в заметках - добавлять в файл истории с датой открытия
 ;;      если он там уже есть то двигать наверх и обновлять дату
